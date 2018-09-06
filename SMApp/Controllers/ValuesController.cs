@@ -3,24 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SMApp.Data;
+using SMApp.Models;
 
 namespace SMApp.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly DataContext _context;
+
         // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        public ValuesController(DataContext context)
         {
-            return new string[] { "value1", "value2" };
+            _context = context;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetValues()
+        {
+            // throw new Exception("Exception occured");
+            var values = await _context.Values.ToListAsync();
+            return Ok(values);
+            //return new string[] { "value1", "value2","Value3" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Getvalue(int id)
         {
-            return "value";
+            var value = await _context.Values.FirstOrDefaultAsync(x => x.Id == id);
+            return Ok(value);
         }
 
         // POST api/values

@@ -19,7 +19,9 @@
     "SMApp": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+       "launchUrl": "api/values",
+      "http": null,
+
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
